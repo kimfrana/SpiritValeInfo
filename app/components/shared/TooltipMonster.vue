@@ -321,7 +321,7 @@
 
 <script setup lang="ts">
 import { getElementColor } from '@/services/util';
-import ElementDamageInfo from '@/MyComponents/ElementDamageInfo.vue';
+import ElementDamageInfo from '@/components/shared/ElementDamageInfo.vue';
 import { Monster } from '@/types';
 import { Link, router } from '@inertiajs/vue3';
 import { directive as vTippy } from 'vue-tippy';

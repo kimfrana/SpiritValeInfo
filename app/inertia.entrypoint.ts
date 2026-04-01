@@ -4,19 +4,16 @@ import 'tippy.js/themes/light-border.css';
 import 'tippy.js/themes/translucent.css';
 import 'tippy.js/animations/shift-away-subtle.css';
 
-import { createInertiaApp } from '@inertiajs/vue3'
+import { createInertiaApp, router } from '@inertiajs/vue3'
 import { createApp, DefineComponent, h, nextTick } from 'vue';
 import { plugin as VueTippy } from 'vue-tippy';
 import { createPinia } from 'pinia';
 import { useTooltipStore } from '@/stores/tooltip';
 
-import { usePage } from '@inertiajs/vue3';
-
-const page = usePage();
-
 const pinia = createPinia();
 
 let tooltipStore: any = null;
+let currentPageProps: Record<string, any> | null = null;
 
 const tippyOptions = {
     directive: 'tippy',
@@ -37,8 +34,10 @@ const tippyOptions = {
                     tooltipStore = useTooltipStore();
                 }
                 if (tooltipStore) {
+                    const gameDataByType = currentPageProps?.gameData?.[instance.props.contentLazy.type];
+
                     if (instance.props.contentLazy.slug) {
-                        const gameData = page.props.gameData[instance.props.contentLazy.type].find(m => m.Slug === instance.props.contentLazy.slug);
+                        const gameData = gameDataByType?.find((m: any) => m.Slug === instance.props.contentLazy.slug);
                         if (gameData === undefined || gameData === null) {
                             console.error('gameData not found: ' + instance.props.contentLazy.type + ' ' + instance.props.contentLazy.slug);
                         } else {
@@ -69,10 +68,22 @@ const tippyOptions = {
 
 void createInertiaApp({
     resolve: (name) => {
-        const pages = import.meta.glob<DefineComponent>('./Pages/**/*.vue');
-        return pages[`./Pages/${name}.vue`]();
+        const pages = import.meta.glob<DefineComponent>('./pages/**/*.vue');
+        // Lowercase only the first directory segment for nested pages.
+        // Keep top-level filenames intact, e.g. 'HomePage' should stay 'HomePage'.
+        const segments = name.split('/');
+        const normalizedName = segments.length > 1
+            ? [segments[0].toLowerCase(), ...segments.slice(1)].join('/')
+            : name;
+
+        return pages[`./pages/${normalizedName}.vue`]();
     },
     setup({ el, App, props, plugin }) {
+        currentPageProps = props.initialPage.props as Record<string, any>;
+        router.on('navigate', (event) => {
+            currentPageProps = event.detail.page.props as Record<string, any>;
+        });
+
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(pinia)

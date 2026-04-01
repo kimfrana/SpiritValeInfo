@@ -79,7 +79,7 @@
 
 <script setup lang="ts">
 import { GameElement } from '@/types';
-import ElementLabel from '@/MyComponents/ElementLabel.vue';
+import ElementLabel from '@/components/shared/ElementLabel.vue';
 
 defineProps<{
     element: GameElement;

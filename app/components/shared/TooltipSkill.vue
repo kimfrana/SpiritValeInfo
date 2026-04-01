@@ -90,8 +90,8 @@
 
 <script setup lang="ts">
 import { getElementColor } from '@/services/util';
-import MyBadge from '@/MyComponents/MyBadge.vue';
-import ElementDamageInfo from '@/MyComponents/ElementDamageInfo.vue';
+import MyBadge from '@/components/shared/MyBadge.vue';
+import ElementDamageInfo from '@/components/shared/ElementDamageInfo.vue';
 import { GameElement } from '@/types';
 
 defineProps<{
