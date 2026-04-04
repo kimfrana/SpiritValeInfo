@@ -4,10 +4,10 @@
         <h1 class="page-title">Build Simulator</h1>
 
         <div v-if="selectedClass === null">
-            <div class="text-center">
+            <div class="text-left">
                 <template v-for="c in classes">
                     <div
-                        class="cursor-pointer text-center p-4"
+                        class="cursor-pointer text-left p-4"
                         style="display: inline-block"
                         v-if="baseClasses.includes(c.DisplayName) || c.DisplayName === 'Weaver'"
                         :key="c.GameId"
@@ -35,13 +35,13 @@
         </div>
         <div v-else>
             <h1
-                style="text-align: center"
+                style="text-align: left"
                 class="mb-4"
             >
                 Skill Tree
             </h1>
             <div
-                style="text-align: center"
+                style="text-align: left"
                 class="mb-4"
             >
                 <button

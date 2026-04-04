@@ -2,7 +2,7 @@
     <BaseLayout>
         <h1 class="page-title">SpiritVale Info Team</h1>
 
-        <div style="text-align: center">
+        <div style="text-align: left">
             <h3 style="font-size: 2rem">RandomGuy</h3>
             <p>Website Development</p>
 

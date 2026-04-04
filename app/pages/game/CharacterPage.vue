@@ -2,7 +2,7 @@
     <BaseLayout>
         <Head :title="character.name + ' - SpiritVale Info'"></Head>
         <h1 class="page-title">{{ character.name }}</h1>
-        <p style="text-align: center">
+        <p style="text-align: left">
             Level {{ character.level }} / {{ character.jobLevel }} {{ character.advancedClass ?? character.class }}
         </p>
 

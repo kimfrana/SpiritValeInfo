@@ -3,10 +3,11 @@
     <BaseLayout>
         <h1 class="page-title">Maps</h1>
 
-        <div class="flex w-full max-w-sm items-center gap-1.5 mb-2">
+        <div class="mb-3 w-full">
             <Input
                 placeholder="Search..."
                 v-model="filterText"
+                class="border-gray-500/80 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/30"
                 @change="updateUrl"
             ></Input>
         </div>

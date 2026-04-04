@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@600;700&family=Manrope:wght@400;500;600;700&display=swap');
 
 @import "flowbite/src/themes/default";
 @plugin "flowbite/plugin";
@@ -19,6 +20,11 @@
     padding: 0.75rem;
     display: inline-block;
     max-width: 550px;
+}
+
+.tippy-box[data-theme~='aggressive'] {
+    color: #f43f5e;
+    font-weight: 700;
 }
 /*
 ToolTip Stat green: a6f70c
@@ -61,7 +67,7 @@ ToolTip Stat green: a6f70c
 
 div.data-table {
     border-radius: 0.5rem;
-    /*overflow: hidden;*/
+    overflow: hidden;
     box-shadow: 0 0 #0000,0 0 #0000, 0 1px 3px 0 rgba(0, 0, 0, 0.1),0 1px 2px 0 rgba(0, 0, 0, 0.06);
     margin: 1rem 0;
     /*overflow-x: auto;*/
@@ -104,6 +110,14 @@ div.data-table table tbody tr td, div.data-table table tfoot tr td {
     border-color: #4b6184;
     border-width: 0;
     border-bottom-width: 1px;
+}
+
+div.data-table table tbody tr {
+    transition: background-color 120ms ease-in-out;
+}
+
+div.data-table table tbody tr:hover td {
+    background-color: #273249;
 }
 
 
@@ -247,6 +261,9 @@ div.data-table table tbody tr td, div.data-table table tfoot tr td {
     body {
         @apply bg-gray-800;
         @apply text-white;
+        font-family: 'Manrope', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        letter-spacing: 0.01em;
     }
 
     h1 {
@@ -257,9 +274,43 @@ div.data-table table tbody tr td, div.data-table table tfoot tr td {
     }
 
     h1.page-title {
-        font-size: var(--text-5xl);
-        text-align: center;
+        font-size: var(--text-4xl);
+        text-align: left;
         @apply mb-4;
+        letter-spacing: -0.02em;
+    }
+
+    h1.page-title.page-title-hero {
+        font-size: var(--text-5xl);
+    }
+
+    h1,
+    h2,
+    h3,
+    th,
+    .section-title,
+    h1.page-title {
+        font-family: 'Lexend', 'Manrope', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .page-content {
+        @apply mx-auto w-full max-w-6xl;
+    }
+
+    .section-panel {
+        @apply rounded-xl border border-gray-700/80 bg-gray-900/30 p-6;
+    }
+
+    .section-title {
+        @apply text-xl font-semibold tracking-tight text-gray-100;
+    }
+
+    .section-divider {
+        @apply my-6 h-px w-full bg-gradient-to-r from-transparent via-gray-600/70 to-transparent;
+    }
+
+    .filter-row {
+        @apply mb-3 flex w-full flex-wrap items-center gap-2;
     }
 
     a {

@@ -2,7 +2,7 @@
     <BaseLayout>
         <h1 class="page-title">{{ guide.title }}</h1>
         <div
-            style="text-align: center"
+            style="text-align: left"
             class="text-gray-400"
         >
             written by <span class="font-bold">{{ guide.author }}</span>

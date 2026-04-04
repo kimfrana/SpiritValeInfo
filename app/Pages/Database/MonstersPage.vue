@@ -1,9 +1,10 @@
 <template>
     <Head title="Monsters - SpiritVale Info"></Head>
     <BaseLayout>
-        <h1 class="page-title">Monsters</h1>
+        <div class="w-full">
+            <h1 class="page-title">Monsters</h1>
 
-        <div class="flex w-full max-w-sm items-center gap-1.5 mb-2">
+            <div class="filter-row">
             <MySelect
                 :options="optionsElement"
                 placeholder="Element"
@@ -17,16 +18,19 @@
                 v-model="filterType"
                 @change="updateUrl"
             ></MySelect>
+            </div>
 
+            <div class="mb-3 w-full">
             <Input
                 placeholder="Search..."
                 v-model="filterText"
+                class="border-gray-500/80 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/30"
                 @change="updateUrl"
             ></Input>
-        </div>
+            </div>
 
-        <div class="data-table">
-            <table class="data-table">
+            <div class="data-table overflow-x-auto">
+                <table class="data-table min-w-[900px]">
                 <thead>
                     <tr>
                         <th class="left">Name</th>
@@ -39,32 +43,47 @@
                         :key="monster.GameId"
                     >
                         <td>
-                            <Link
-                                :href="'/monsters/' + monster.Slug"
-                                class="mr-2"
-                                v-tippy="{ contentLazy: { type: 'monster', slug: monster.Slug } }"
-                                >{{ monster.DisplayName }}</Link
-                            >
-                            <MyBadge
-                                color="yellow"
-                                v-if="monster.IsBoss"
-                                >BOSS</MyBadge
-                            >
-                            <div class="my-2">
-                                <MyBadge>Lv {{ monster.Level }}</MyBadge>
-                                <ElementLabel :element="monster.Element"></ElementLabel>
-                                <span
-                                    class="mx-1 text-rose-500"
-                                    style="font-weight: bold"
-                                    v-if="monster.IsHostile"
-                                    >Aggressive</span
+                            <span class="inline-flex items-center gap-1.5">
+                                <Link
+                                    :href="'/monsters/' + monster.Slug"
+                                    class="mr-1"
+                                    v-tippy="{ contentLazy: { type: 'monster', slug: monster.Slug } }"
+                                    >{{ monster.DisplayName }}</Link
                                 >
                                 <span
-                                    class="mx-1 text-blue-400 has-tooltip"
-                                    style="font-weight: bold"
-                                    v-tippy="monster.skillList.join(', ')"
-                                    v-if="monster.skillList.length > 0"
-                                    >Skills
+                                    v-if="monster.IsBoss"
+                                    class="inline-flex h-5 w-5 items-center justify-center rounded-full border border-yellow-300 bg-yellow-300/15 text-yellow-300 has-tooltip"
+                                    v-tippy="'Boss'"
+                                    aria-label="Boss"
+                                >
+                                    <img
+                                        class="h-full w-full"
+                                        :src="'/navbar/icon-boss-crown.svg'"
+                                        alt=""
+                                        aria-hidden="true"
+                                    />
+                                </span>
+                                <span
+                                    class="inline-flex h-5 w-5 items-center justify-center rounded-full text-rose-500 has-tooltip"
+                                    v-if="monster.IsHostile"
+                                    v-tippy="{ content: 'Aggressive', theme: 'spiritvale aggressive' }"
+                                    aria-label="Aggressive"
+                                >
+                                    <img
+                                        class="h-full w-full"
+                                        :src="'/navbar/icon-aggressive-alert.svg'"
+                                        alt=""
+                                        aria-hidden="true"
+                                    />
+                                </span>
+                            </span>
+                            <div class="my-2 flex flex-wrap items-center gap-1.5 text-xs">
+                                <span class="rounded-md border border-gray-200/60 px-2 py-0.5 text-gray-200">Lv {{ monster.Level }}</span>
+                                <span
+                                    class="rounded-full border px-2 py-0.5"
+                                    :style="{ color: getElementColor(monster.Element), borderColor: getElementColor(monster.Element), fontWeight: 'bold' }"
+                                >
+                                    {{ monster.Element }}
                                 </span>
                             </div>
                         </td>
@@ -94,23 +113,28 @@
                                             loading="lazy"
                                             :src="'https://spiritvale.info/content/game/icons/' + drop.icon + '.webp'"
                                             :alt="drop.name"
-                                            style="width: 100px; display: inline"
+                                            style="width: 100%; height: 100%; object-fit: contain; display: block"
                                         />
                                         <span
                                             style="
                                                 position: absolute;
                                                 top: 0;
-                                                left: 0;
-                                                right: 0;
+                                                left: 50%;
+
                                                 font-size: 0.6rem;
-                                                background-color: rgba(0, 0, 0, 0.8);
+                                                background-color: rgba(36, 44, 64, 0.72);
                                                 color: #ddd;
-                                                text-align: center;
+                                                text-align: left;
+                                                transform: translateX(-50%);
+                                                max-width: calc(100% - 0.2rem);
+                                                white-space: nowrap;
+                                                overflow: hidden;
+                                                text-overflow: ellipsis;
                                                 display: inline-block;
-                                                line-height: 0.5rem;
+                                                line-height: 0.85rem;
                                                 font-weight: bold;
-                                                padding: 0.1rem;
-                                                padding-top: 0;
+                                                padding: 0.16rem 0.22rem;
+
                                             "
                                             >{{ drop.name }}</span
                                         >
@@ -120,12 +144,20 @@
                                                 bottom: 0;
                                                 right: 0;
                                                 font-size: 0.7rem;
-                                                background-color: rgba(0, 0, 0, 0.8);
+                                                font-variant-numeric: tabular-nums;
+                                                width: 1.8rem;
+                                                min-width: 1.8rem;
+                                                max-width: 1.8rem;
+                                                border-radius: 0.25rem;
+                                                box-sizing: border-box;
+                                                align-items: center;
+                                                justify-content: center;
+                                                background-color: rgba(36, 44, 64, 0.72);
                                                 color: #ddd;
-                                                text-align: center;
-                                                display: inline-block;
+                                                text-align: left;
+                                                display: inline-flex;
                                                 font-weight: bold;
-                                                padding: 0.1rem 0.2rem;
+                                                padding: 0;
                                             "
                                             >{{ drop.chance }}%</span
                                         >
@@ -146,23 +178,28 @@
                                             loading="lazy"
                                             :src="'https://spiritvale.info/content/game/icons/' + drop.icon + '.webp'"
                                             :alt="drop.name"
-                                            style="width: 100px; display: inline"
+                                            style="width: 100%; height: 100%; object-fit: contain; display: block"
                                         />
                                         <span
                                             style="
                                                 position: absolute;
                                                 top: 0;
-                                                left: 0;
-                                                right: 0;
+                                                left: 50%;
+
                                                 font-size: 0.6rem;
-                                                background-color: rgba(0, 0, 0, 0.8);
+                                                background-color: rgba(36, 44, 64, 0.72);
                                                 color: #ddd;
-                                                text-align: center;
+                                                text-align: left;
+                                                transform: translateX(-50%);
+                                                max-width: calc(100% - 0.2rem);
+                                                white-space: nowrap;
+                                                overflow: hidden;
+                                                text-overflow: ellipsis;
                                                 display: inline-block;
-                                                line-height: 0.5rem;
+                                                line-height: 0.85rem;
                                                 font-weight: bold;
-                                                padding: 0.1rem;
-                                                padding-top: 0;
+                                                padding: 0.16rem 0.22rem;
+
                                             "
                                             >{{ drop.name }}</span
                                         >
@@ -172,12 +209,20 @@
                                                 bottom: 0;
                                                 right: 0;
                                                 font-size: 0.7rem;
-                                                background-color: rgba(0, 0, 0, 0.8);
+                                                font-variant-numeric: tabular-nums;
+                                                width: 1.8rem;
+                                                min-width: 1.8rem;
+                                                max-width: 1.8rem;
+                                                border-radius: 0.25rem;
+                                                box-sizing: border-box;
+                                                align-items: center;
+                                                justify-content: center;
+                                                background-color: rgba(36, 44, 64, 0.72);
                                                 color: #ddd;
-                                                text-align: center;
-                                                display: inline-block;
+                                                text-align: left;
+                                                display: inline-flex;
                                                 font-weight: bold;
-                                                padding: 0.1rem 0.2rem;
+                                                padding: 0;
                                             "
                                             >{{ drop.chance }}%</span
                                         >
@@ -198,23 +243,28 @@
                                             loading="lazy"
                                             :src="'https://spiritvale.info/content/game/icons/' + drop.icon + '.webp'"
                                             :alt="drop.name"
-                                            style="width: 100px; display: inline"
+                                            style="width: 100%; height: 100%; object-fit: contain; display: block"
                                         />
                                         <span
                                             style="
                                                 position: absolute;
                                                 top: 0;
-                                                left: 0;
-                                                right: 0;
+                                                left: 50%;
+
                                                 font-size: 0.6rem;
-                                                background-color: rgba(0, 0, 0, 0.8);
+                                                background-color: rgba(36, 44, 64, 0.72);
                                                 color: #ddd;
-                                                text-align: center;
+                                                text-align: left;
+                                                transform: translateX(-50%);
+                                                max-width: calc(100% - 0.2rem);
+                                                white-space: nowrap;
+                                                overflow: hidden;
+                                                text-overflow: ellipsis;
                                                 display: inline-block;
-                                                line-height: 0.5rem;
+                                                line-height: 0.85rem;
                                                 font-weight: bold;
-                                                padding: 0.1rem;
-                                                padding-top: 0;
+                                                padding: 0.16rem 0.22rem;
+
                                             "
                                             >{{ drop.name }}</span
                                         >
@@ -224,12 +274,20 @@
                                                 bottom: 0;
                                                 right: 0;
                                                 font-size: 0.7rem;
-                                                background-color: rgba(0, 0, 0, 0.8);
+                                                font-variant-numeric: tabular-nums;
+                                                width: 1.8rem;
+                                                min-width: 1.8rem;
+                                                max-width: 1.8rem;
+                                                border-radius: 0.25rem;
+                                                box-sizing: border-box;
+                                                align-items: center;
+                                                justify-content: center;
+                                                background-color: rgba(36, 44, 64, 0.72);
                                                 color: #ddd;
-                                                text-align: center;
-                                                display: inline-block;
+                                                text-align: left;
+                                                display: inline-flex;
                                                 font-weight: bold;
-                                                padding: 0.1rem 0.2rem;
+                                                padding: 0;
                                             "
                                             >{{ drop.chance }}%</span
                                         >
@@ -250,23 +308,28 @@
                                             loading="lazy"
                                             :src="'https://spiritvale.info/content/game/icons/' + drop.icon + '.webp'"
                                             :alt="drop.name"
-                                            style="width: 100px; display: inline"
+                                            style="width: 100%; height: 100%; object-fit: contain; display: block"
                                         />
                                         <span
                                             style="
                                                 position: absolute;
                                                 top: 0;
-                                                left: 0;
-                                                right: 0;
+                                                left: 50%;
+
                                                 font-size: 0.6rem;
-                                                background-color: rgba(0, 0, 0, 0.8);
+                                                background-color: rgba(36, 44, 64, 0.72);
                                                 color: #ddd;
-                                                text-align: center;
+                                                text-align: left;
+                                                transform: translateX(-50%);
+                                                max-width: calc(100% - 0.2rem);
+                                                white-space: nowrap;
+                                                overflow: hidden;
+                                                text-overflow: ellipsis;
                                                 display: inline-block;
-                                                line-height: 0.5rem;
+                                                line-height: 0.85rem;
                                                 font-weight: bold;
-                                                padding: 0.1rem;
-                                                padding-top: 0;
+                                                padding: 0.16rem 0.22rem;
+
                                             "
                                             >{{ drop.name }}</span
                                         >
@@ -276,12 +339,20 @@
                                                 bottom: 0;
                                                 right: 0;
                                                 font-size: 0.7rem;
-                                                background-color: rgba(0, 0, 0, 0.8);
+                                                font-variant-numeric: tabular-nums;
+                                                width: 1.8rem;
+                                                min-width: 1.8rem;
+                                                max-width: 1.8rem;
+                                                border-radius: 0.25rem;
+                                                box-sizing: border-box;
+                                                align-items: center;
+                                                justify-content: center;
+                                                background-color: rgba(36, 44, 64, 0.72);
                                                 color: #ddd;
-                                                text-align: center;
-                                                display: inline-block;
+                                                text-align: left;
+                                                display: inline-flex;
                                                 font-weight: bold;
-                                                padding: 0.1rem 0.2rem;
+                                                padding: 0;
                                             "
                                             >{{ drop.chance }}%</span
                                         >
@@ -302,23 +373,28 @@
                                             loading="lazy"
                                             :src="'https://spiritvale.info/content/game/icons/item-' + drop.icon + '.webp'"
                                             :alt="drop.name"
-                                            style="width: 100px; display: inline"
+                                            style="width: 100%; height: 100%; object-fit: contain; display: block"
                                         />
                                         <span
                                             style="
                                                 position: absolute;
                                                 top: 0;
-                                                left: 0;
-                                                right: 0;
+                                                left: 50%;
+
                                                 font-size: 0.6rem;
-                                                background-color: rgba(0, 0, 0, 0.8);
+                                                background-color: rgba(36, 44, 64, 0.72);
                                                 color: #ddd;
-                                                text-align: center;
+                                                text-align: left;
+                                                transform: translateX(-50%);
+                                                max-width: calc(100% - 0.2rem);
+                                                white-space: nowrap;
+                                                overflow: hidden;
+                                                text-overflow: ellipsis;
                                                 display: inline-block;
-                                                line-height: 0.5rem;
+                                                line-height: 0.85rem;
                                                 font-weight: bold;
-                                                padding: 0.1rem;
-                                                padding-top: 0;
+                                                padding: 0.16rem 0.22rem;
+
                                             "
                                             >{{ drop.name }}</span
                                         >
@@ -328,12 +404,20 @@
                                                 bottom: 0;
                                                 right: 0;
                                                 font-size: 0.7rem;
-                                                background-color: rgba(0, 0, 0, 0.8);
+                                                font-variant-numeric: tabular-nums;
+                                                width: 1.8rem;
+                                                min-width: 1.8rem;
+                                                max-width: 1.8rem;
+                                                border-radius: 0.25rem;
+                                                box-sizing: border-box;
+                                                align-items: center;
+                                                justify-content: center;
+                                                background-color: rgba(36, 44, 64, 0.72);
                                                 color: #ddd;
-                                                text-align: center;
-                                                display: inline-block;
+                                                text-align: left;
+                                                display: inline-flex;
                                                 font-weight: bold;
-                                                padding: 0.1rem 0.2rem;
+                                                padding: 0;
                                             "
                                             >{{ drop.chance }}%</span
                                         >
@@ -343,7 +427,8 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+                </table>
+            </div>
         </div>
     </BaseLayout>
 </template>
@@ -354,8 +439,7 @@ import { computed, ref, h } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import MySelect from '@/components/shared/MySelect.vue';
 import { Input } from '@/components/ui/input';
-import MyBadge from '@/components/shared/MyBadge.vue';
-import ElementLabel from '@/components/shared/ElementLabel.vue';
+import { getElementColor } from '@/services/util';
 import { Monster } from '@/types';
 
 const props = defineProps<{
@@ -446,5 +530,3 @@ const updateUrl = () => {
     }
 };
 </script>
-
-<style scoped></style>

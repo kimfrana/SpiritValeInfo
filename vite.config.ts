@@ -10,6 +10,15 @@ export default defineConfig({
         tailwindcss(),
         tempest()
     ],
+    server: {
+        host: 'localhost',
+        port: 5173,
+        strictPort: true,
+        hmr: {
+            host: 'localhost',
+            clientPort: 5173,
+        },
+    },
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './app'),

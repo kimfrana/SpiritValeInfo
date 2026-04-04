@@ -4,7 +4,7 @@
         <h1 class="page-title">Server Status</h1>
         <div
             class="data-table"
-            style="max-width: 600px; margin: 0 auto"
+            style="max-width: 600px; margin: 0"
         >
             <table>
                 <thead>
@@ -20,7 +20,7 @@
                             <tr>
                                 <td
                                     colspan="3"
-                                    class="center"
+                                    class="left"
                                 >
                                     Loading...
                                 </td>
@@ -30,18 +30,18 @@
                             v-for="server in servers"
                             :key="server.name"
                         >
-                            <td class="center">{{ server.name }}</td>
-                            <td class="center">{{ server.region }}</td>
-                            <td class="center">{{ server.players }}</td>
+                            <td class="left">{{ server.name }}</td>
+                            <td class="left">{{ server.region }}</td>
+                            <td class="left">{{ server.players }}</td>
                         </tr>
                         <tr>
                             <td
                                 colspan="2"
-                                class="center font-bold"
+                                class="left font-bold"
                             >
                                 Sum
                             </td>
-                            <td class="center">{{ sum }}</td>
+                            <td class="left">{{ sum }}</td>
                         </tr>
                     </Deferred>
                 </tbody>
