@@ -30,23 +30,55 @@
 ToolTip Stat green: a6f70c
  */
 
-.markdown-content h1 {
+.wiki-content {
+    max-width: 1000px;
+}
+
+.markdown-content h1, .wiki-content h1 {
     margin-top: 2rem;
     margin-bottom: 0.5rem;
 }
 
-.markdown-content h2 {
+.markdown-content h2, .wiki-content h2 {
     font-size: 2rem;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
-.markdown-content h3 {
+.markdown-content h3, .wiki-content h3 {
     font-size: 1.5rem;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
-.markdown-content p {
-    padding-bottom: 1rem;
+.markdown-content p, .wiki-content p {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.markdown-content > ul, .wiki-content > ul {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.markdown-content ul > li, .wiki-content ul > li {
+    margin-left: 2rem;
+    list-style-type: disc;
+}
+
+.markdown-content ol > li, .wiki-content ol > li {
+    margin-left: 2rem;
+    list-style-type: decimal;
+}
+
+.wiki-data-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 700px;
+    border: 1px solid #555555;
+}
+
+.wiki-data-table td, .wiki-data-table th {
+    padding: 0.5rem;
+    border: 1px solid #555555;
 }
 
 
@@ -302,7 +334,7 @@ div.data-table table tbody tr:hover td {
     }
 
     .section-title {
-        @apply text-xl font-semibold tracking-tight text-gray-100;
+        @apply text-2xl font-semibold tracking-tight text-gray-100;
     }
 
     .section-divider {

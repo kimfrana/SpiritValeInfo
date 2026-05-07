@@ -44,6 +44,14 @@ abstract class AbstractGameModel
         return static::findOneBy('Slug', $slug);
     }
 
+    /** @return static[] */
+    public static function getBySlugs(array $slugs): array
+    {
+        $list = self::readGameData();
+        $filteredList = array_filter($list, fn (array $element) => in_array($element['Slug'], $slugs));
+        return static::mapDataMultiple($filteredList);
+    }
+
     public static function findOneBy(string $key, string $value): ?static
     {
         $list = self::readGameData();

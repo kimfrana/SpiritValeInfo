@@ -36,7 +36,7 @@ class DatabaseController
 
         $this->loadAdditionalDataMaps($maps);
 
-        return inertia("Database/MapsPage", [
+        return inertia("database/MapsPage", [
             'search' => $search,
             'maps' => $maps,
             'gameData' => DatabaseUtil::getGameData(),
@@ -53,7 +53,7 @@ class DatabaseController
 
         $this->loadAdditionalDataMaps($maps);
 
-        return inertia("Database/MapPage", [
+        return inertia("database/MapPage", [
             'maps' => $maps,
             'gameData' => DatabaseUtil::getGameData(),
         ]);
@@ -79,7 +79,7 @@ class DatabaseController
         $monsters  = Monster::getAll();
         Monster::loadAdditionalData($monsters);
 
-        return inertia("Database/MonstersPage", [
+        return inertia("database/MonstersPage", [
             'element' => $element,
             'type' => $type,
             'search' => $search,
@@ -121,7 +121,7 @@ class DatabaseController
             $spawner = Consumable::getByMonsterGameId($monster->GameId);
         }
 
-        return inertia("Database/MonsterPage", [
+        return inertia("database/MonsterPage", [
             'monster' => json_decode(json_encode($monster, JSON_PARTIAL_OUTPUT_ON_ERROR), true),
             'spawner' => $spawner,
             'locations' => $locations,
@@ -136,7 +136,7 @@ class DatabaseController
         $type = $_GET['type'] ?? 'All';
         $search = $_GET['search'] ?? '';
 
-        return inertia("Database/CardsPage", [
+        return inertia("database/CardsPage", [
             'slot' => $slot,
             'type' => $type,
             'search' => $search,
@@ -157,7 +157,7 @@ class DatabaseController
         $GLOBALS['description'] = $card->Description;
         $GLOBALS['icon'] = $card->icon;
 
-        return inertia("Database/CardPage", [
+        return inertia("database/CardPage", [
             'card' => $card,
             'droppedBy' => DatabaseUtil::getDroppedBy('Card', $card->GameId),
             'gameData' => DatabaseUtil::getGameData(),
@@ -176,7 +176,7 @@ class DatabaseController
         $type = $_GET['type'] ?? 'All';
         $search = $_GET['search'] ?? '';
 
-        return inertia("Database/GemsPage", [
+        return inertia("database/GemsPage", [
             'type' => $type,
             'search' => $search,
             'gems' => Gem::getAll(),
@@ -199,7 +199,7 @@ class DatabaseController
         }
         $GLOBALS['icon'] = $gem->icon;
 
-        return inertia("Database/GemPage", [
+        return inertia("database/GemPage", [
             'gem' => $gem,
             'droppedBy' => DatabaseUtil::getDroppedBy('GemDrops', $gem->GameId),
             'gameData' => DatabaseUtil::getGameData(),
@@ -278,7 +278,7 @@ class DatabaseController
             ];
         }, $artifacts));
 
-        return inertia("Database/ArtifactsPage", [
+        return inertia("database/ArtifactsPage", [
             'search' => $search,
             'artifacts' => json_decode(json_encode($frontEndData, JSON_PARTIAL_OUTPUT_ON_ERROR), true),
             'gameData' => DatabaseUtil::getGameData(),
@@ -297,7 +297,7 @@ class DatabaseController
         $equipmentList = Equipment::getAll();
         Equipment::loadAdditionalData($equipmentList);
 
-        return inertia("Database/EquipmentListPage", [
+        return inertia("database/EquipmentListPage", [
             'type' => $type,
             'typeOptions' => array_values($equipmentTypes),
             'search' => $search,
@@ -321,7 +321,7 @@ class DatabaseController
         $GLOBALS['description'] = $equipment->Description;
         $GLOBALS['icon'] = 'item-' . $equipment->icon;
 
-        return inertia("Database/EquipmentPage", ['equipment' => $equipment]);
+        return inertia("database/EquipmentPage", ['equipment' => $equipment]);
     }
 
     #[Get('/consumables/{slug}')]
@@ -344,7 +344,7 @@ class DatabaseController
         $GLOBALS['description'] = $consumable->Description;
         $GLOBALS['icon'] = 'item-' . $consumable->icon;
 
-        return inertia("Database/ConsumablePage", [
+        return inertia("database/ConsumablePage", [
             'consumable' => $consumable,
             'boss' => $boss,
             'vending' => Inertia::defer(fn () => VendingUtil::getVendingData(1, $consumable->GameId, null)),
@@ -367,7 +367,7 @@ class DatabaseController
         $GLOBALS['description'] = $material->Description;
         $GLOBALS['icon'] = 'item-' . $material->icon;
 
-        return inertia("Database/MaterialPage", [
+        return inertia("database/MaterialPage", [
             'material' => $material,
             'vending' => Inertia::defer(fn () => VendingUtil::getVendingData(0, $material->GameId, null)),
             'vendingHistory' => Inertia::defer(fn () => VendingUtil::getVendingHistoryData(0, $material->GameId)),

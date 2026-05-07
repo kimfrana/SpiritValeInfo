@@ -1,4 +1,5 @@
 <template>
+    <img :src="'https://spiritvale.info/content/game/icons/element-' + element + '.webp'" style="display: inline; height: 1.2rem;" :alt="element">
     <span
         class="mx-1"
         :style="{ 'font-weight': 'bold', color: getElementColorLight(element) }"

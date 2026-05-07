@@ -37,6 +37,7 @@ const tippyOptions = {
                     const gameDataByType = currentPageProps?.gameData?.[instance.props.contentLazy.type];
 
                     if (instance.props.contentLazy.slug) {
+                        const gameDataByType = currentPageProps?.gameData?.[instance.props.contentLazy.type];
                         const gameData = gameDataByType?.find((m: any) => m.Slug === instance.props.contentLazy.slug);
                         if (gameData === undefined || gameData === null) {
                             console.error('gameData not found: ' + instance.props.contentLazy.type + ' ' + instance.props.contentLazy.slug);
@@ -69,14 +70,8 @@ const tippyOptions = {
 void createInertiaApp({
     resolve: (name) => {
         const pages = import.meta.glob<DefineComponent>('./pages/**/*.vue');
-        // Lowercase only the first directory segment for nested pages.
-        // Keep top-level filenames intact, e.g. 'HomePage' should stay 'HomePage'.
-        const segments = name.split('/');
-        const normalizedName = segments.length > 1
-            ? [segments[0].toLowerCase(), ...segments.slice(1)].join('/')
-            : name;
+        return pages[`./pages/${name}.vue`]();
 
-        return pages[`./pages/${normalizedName}.vue`]();
     },
     setup({ el, App, props, plugin }) {
         currentPageProps = props.initialPage.props as Record<string, any>;

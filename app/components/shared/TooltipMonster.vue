@@ -7,6 +7,32 @@
                 @click="router.get('/monsters/' + monster.Slug)"
                 >{{ monster.DisplayName }}</span
             >
+            <span
+                v-if="monster.IsBoss"
+                class="inline-flex h-5 w-5 items-center justify-center rounded-full border border-yellow-300 bg-yellow-300/15 text-yellow-300 has-tooltip ml-2"
+                v-tippy="'Boss'"
+                aria-label="Boss"
+            >
+                <img
+                    class="h-full w-full"
+                    :src="'/navbar/icon-boss-crown.svg'"
+                    alt=""
+                    aria-hidden="true"
+                />
+            </span>
+            <span
+                class="inline-flex h-5 w-5 items-center justify-center rounded-full text-rose-500 has-tooltip ml-2"
+                v-if="monster.IsHostile"
+                v-tippy="{ content: 'Aggressive', theme: 'spiritvale aggressive' }"
+                aria-label="Aggressive"
+            >
+                <img
+                    class="h-full w-full"
+                    :src="'/navbar/icon-aggressive-alert.svg'"
+                    alt=""
+                    aria-hidden="true"
+                />
+            </span>
         </div>
         <div>
             <span
@@ -14,20 +40,9 @@
                 style="color: white; text-transform: uppercase"
                 >Level {{ monster.Level }}</span
             >
-            <span
-                class="text-lg font-bold"
-                style="color: white; text-transform: uppercase"
-                v-if="monster.IsBoss"
-            >
-                BOSS</span
-            >
         </div>
         <div>
-            <span
-                class="text-lg font-bold"
-                :style="{ color: getElementColor(monster.Element) }"
-                >{{ monster.Element }}</span
-            >
+            <ElementLabel :element="monster.Element"></ElementLabel>
             <span
                 class="mx-1 text-rose-500"
                 style="font-weight: bold"
@@ -320,11 +335,11 @@
 </template>
 
 <script setup lang="ts">
-import { getElementColor } from '@/services/util';
 import ElementDamageInfo from '@/components/shared/ElementDamageInfo.vue';
 import { Monster } from '@/types';
-import { Link, router } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
 import { directive as vTippy } from 'vue-tippy';
+import ElementLabel from '@/components/shared/ElementLabel.vue';
 
 defineProps<{
     monster: Monster;

@@ -30,6 +30,7 @@ class Monster extends AbstractGameModel
 
     public function __construct(array $data)
     {
+        $data['ArtifactSlots'] = [];
         parent::__construct($data);
     }
 

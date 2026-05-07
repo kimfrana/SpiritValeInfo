@@ -39,7 +39,7 @@ class GameStatisticsController
             'Warrior' => $this->fetchLeaderboard('Warrior'),
         ];
 
-        return inertia('Game/LeaderboardsPage', [
+        return inertia('game/LeaderboardsPage', [
             'levelLeaderboards' => $levelLeaderboards,
         ]);
     }
@@ -159,7 +159,7 @@ class GameStatisticsController
             $skillLevels[$characterSkill['skill']->id] = $characterSkill['level'];
         }
 
-        return inertia('Game/CharacterPage', [
+        return inertia('game/CharacterPage', [
             'character' => [
                 'name' => $character['Name'],
                 'level' => $character['Level'],

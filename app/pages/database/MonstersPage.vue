@@ -83,6 +83,7 @@
                                     class="rounded-full border px-2 py-0.5"
                                     :style="{ color: getElementColor(monster.Element), borderColor: getElementColor(monster.Element), fontWeight: 'bold' }"
                                 >
+                                    <img :src="'https://spiritvale.info/content/game/icons/element-' + monster.Element + '.webp'" style="display: inline; height: 0.8rem;" :alt="monster.Element">
                                     {{ monster.Element }}
                                 </span>
                             </div>

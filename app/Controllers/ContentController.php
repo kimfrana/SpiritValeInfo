@@ -14,6 +14,6 @@ class ContentController
     {
         $videos = DataReader::readData('videos');
 
-        return Inertia::render('Content/VideosPage', ['videos' => $videos]);
+        return Inertia::render('content/VideosPage', ['videos' => $videos]);
     }
 }

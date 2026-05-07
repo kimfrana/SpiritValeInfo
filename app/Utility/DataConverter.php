@@ -180,6 +180,11 @@ class DataConverter
             'AtkSpdMult' => 'Attack Speed: ' . self::valueObjectString($stat, '%'),
             'CooldownRecovery' => 'Cooldown Recovery: ' . self::valueObjectString($stat, '%'),
             'StatusMaxStacks' => 'Status Stacks: ' . self::valueObjectString($stat),
+            'AtkSpdLimit' => 'AtkSpdLimit: ' . self::valueObjectString($stat),
+            'SkillSplash' => 'Skill Splash: ' . self::valueObjectString($stat),
+            'DamageFarRange' => 'DamageFarRange: ' . self::valueObjectString($stat, '%'),
+            'DefPierce' => 'DefPierce: ' . self::valueObjectString($stat),
+            'AutocastSkill' => self::getSkillName($stat['Value']['ValueStr']) . ' autocasts ' . self::getSkillName($stat['Value']['ValueStr2']),
             default => $type,
         };
     }

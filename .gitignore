@@ -5,3 +5,5 @@ log/
 public/vite-tempest
 data/
 public/build/
+
+.idea/

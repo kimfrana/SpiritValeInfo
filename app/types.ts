@@ -4,6 +4,7 @@ export type Card = { Slug: string; GameId: string; DisplayName: string; Affix: s
 export type Gem = { Slug: string; GameId: string; DisplayName: string; Description: string; Affix: string; IsBoss: number; Stats: Array<object>; icon: string; statsTexts: string[] };
 
 export type ItemType = 'equipment' | 'material' | 'consumable' | 'card' | 'gem';
+export type GameDataType = ItemType | 'skill' | 'monster';
 
 export type Drop = {
     id: string;

@@ -22,7 +22,7 @@ class VendingController {
         $filterType = $filterTypes[$_GET['filterType'] ?? ''] ?? null;
         $filterName = $_GET['filterName'] ?? null;
 
-        return inertia('Game/VendingPage', [
+        return inertia('gAame/VendingPage', [
             'vending' => Inertia::defer(fn () => VendingUtil::getVendingData($filterType, null, $filterName)),
             'filterType' => $_GET['filterType'] ?? 'all',
             'filterName' => $_GET['filterName'] ?? '',
